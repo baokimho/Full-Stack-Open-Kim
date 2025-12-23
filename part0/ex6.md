@@ -5,9 +5,9 @@ sequenceDiagram
 
     Note right of browser: The user writes a note and clicks the Save button
 
-    Note right of browser: The event handler prevents the default form submission (preventDefault)
+    Note right of browser: The event handler prevents the default form submission (using e.preventDefault)
 
-    Note right of browser: The browser creates a new note, adds it to the notes list, and rerenders the note list on the page
+    Note right of browser: The browser creates a new note, adds it to the local notes list, and rerenders the note list on the page
 
     browser->>server: POST [https://studies.cs.helsinki.fi/exampleapp/new_note_spa](https://studies.cs.helsinki.fi/exampleapp/new_note_spa)
     activate server
