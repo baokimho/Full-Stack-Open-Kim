@@ -1,8 +1,15 @@
-const Content = ({part, exercises}) => {
+const Part = (props) => {
+    return(<p>{props.part} {props.exercises}</p>)
+}
+
+const Content = (props) => {
     return(
         <div>
-            <p>{part} {exercises}</p>
+            <Part part={props.part1} exercises={props.exercises1} />
+            <Part part={props.part2} exercises={props.exercises2} />
+            <Part part={props.part3} exercises={props.exercises3} />
         </div>
+
     )
 }
 
