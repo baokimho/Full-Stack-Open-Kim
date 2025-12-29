@@ -1,14 +1,12 @@
-const Part = (props) => {
-    return(<p>{props.part} {props.exercises}</p>)
+const Part = ({name, exercises}) => {
+    return(<p>{name} {exercises}</p>)
 }
 
 const Content = (props) => {
-    console.log(props);
+    // console.log(props);
     return(
         <div>
-            <Part part={props.parts[0].name} exercises={props.parts[0].exercises} />
-            <Part part={props.parts[1].name} exercises={props.parts[1].exercises} />
-            <Part part={props.parts[2].name} exercises={props.parts[2].exercises} />
+            {props.parts.map(course => <Part key={course.id} name={course.name} exercises={course.exercises} />)}
         </div>
 
     )
