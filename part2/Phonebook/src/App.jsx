@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import Persons from './components/Person.jsx'
 import PersonForm from './components/PersonForm.jsx'
 import Filter from './components/Filter.jsx'
-import axios from 'axios'
+import personService from './services/persons.js'
 
 const App = () => {
 
@@ -12,11 +12,9 @@ const App = () => {
   const [filter, setFilter] = useState('')
 
   useEffect(() =>{
-    axios
-      .get('http://localhost:3001/persons')
-      .then(response => {
-        setPersons(response.data)
-      })
+    personService.getAll().then(initialPersons => {
+      setPersons(initialPersons)
+    })
   },[])
 
   const handleSubmit = (e) =>{
@@ -30,9 +28,11 @@ const App = () => {
       name: newName,
       number: newNumber
     }
-    setPersons(persons.concat(personObject))
-    setNewName('')
-    setNewNumber('')
+    personService.create(personObject).then(returnedPerson => {
+      setPersons(persons.concat(returnedPerson))
+      setNewName('')
+      setNewNumber('')
+    })
   }
 
   const personsToShow = filter 
