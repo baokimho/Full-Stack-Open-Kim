@@ -9,8 +9,11 @@ const personService = {
 
     create: (newPerson) => {
         return axios.post(baseUrl, newPerson).then(response => response.data);
-    }
+    },
 
+    delete: (id) => {
+        return axios.delete(`${baseUrl}/${id}`).then(response => response.data);
+    },
 };
 
 export default personService;
