@@ -17,13 +17,28 @@ const App = () => {
     })
   },[])
 
-  const handleSubmit = (e) =>{
-    if (persons.some(person => person.name === newName)) {
-      alert(`${newName} is already added to phonebook`)
-      e.preventDefault()
+  const handleSubmit = (e) =>{ 
+    e.preventDefault()
+
+    const existingPerson = persons.find(p => p.name === newName)
+
+    if (existingPerson) {
+      const confirmUpdate  = window.confirm(`${newName} exists, want to replace?`)
+      
+      if (confirmUpdate) {
+        const changedPerson = {...existingPerson, number: newNumber}
+        
+        personService
+          .update(existingPerson.id, changedPerson)
+          .then(returnP=> {
+            setPersons(persons.map(p => p.id !== existingPerson.id ? p : returnP ))
+            setNewName('')
+            setNewNumber('')
+          })
+      }
       return
     }
-    e.preventDefault()
+
     const personObject = {
       name: newName,
       number: newNumber
