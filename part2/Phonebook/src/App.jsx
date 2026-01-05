@@ -12,6 +12,7 @@ const App = () => {
   const [newNumber, setNewNumber] = useState('')
   const [filter, setFilter] = useState('')
   const [message, setMessage] = useState(null)
+  const [typeNoti, setTypeNoti] = useState('')
 
   useEffect(() =>{
     personService.getAll().then(initialPersons => {
@@ -22,6 +23,16 @@ const App = () => {
   const showNotification = (text) => {
     setMessage(text)
     setTimeout(() => setMessage(null), 3000)
+  }
+
+  const showError = (text) =>{
+    setMessage(text)
+    setTypeNoti('error')
+    setTimeout(() =>{
+      setMessage(null)
+      setTypeNoti(null)
+    } 
+    ,3000)
   }
 
   const handleSubmit = (e) =>{ 
@@ -43,7 +54,11 @@ const App = () => {
             setNewNumber('')
             showNotification(`Updated ${changedPerson.name}`)
           })
-      }
+          .catch(() => {
+            showError(`Information of ${existingPerson.name} has been deleted!`)
+            setPersons(persons.filter(p => p.id !== existingPerson.id))
+          } )
+      } 
       return
     }
 
@@ -77,7 +92,7 @@ const App = () => {
       <h1>Phonebook</h1>
       <Filter filter={filter} setFilter={setFilter} />
       <h2>Add a new</h2>
-      <Notification message={message}/>
+      <Notification message={message} type={typeNoti}/>
       <PersonForm 
         handleSubmit={handleSubmit} 
         newName={newName} 
