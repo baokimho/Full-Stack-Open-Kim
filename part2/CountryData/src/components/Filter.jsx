@@ -1,7 +1,7 @@
 
-const Filter = ({country, setCountry}) => {
+const Filter = ({filter, setFilter}) => {
   return (
-    <div>Find country <input type='search' value={country} onChange={(e)=> setCountry(e.target.value)} /></div>
+    <div>Find country <input type='search' value={filter} onChange={(e)=> setFilter(e.target.value)} /></div>
   )
 }
 
