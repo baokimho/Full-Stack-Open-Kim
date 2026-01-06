@@ -26,7 +26,7 @@ const App = () => {
       : countriesToShow.length === 1 ? <CountryDetail country={countriesToShow[0]} />
       : countriesToShow.map(country => (
         <div key={country.name.common}>
-          <h2>{country.name.common}</h2>
+          <h2>{country.name.common}</h2> <button onClick={() => setFilter(country.name.common)}> Show </button>
         </div>
       ))}
     </div>
