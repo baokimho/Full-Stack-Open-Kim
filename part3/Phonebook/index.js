@@ -25,6 +25,25 @@ let data =
     }
 ]
 
+app.use(express.json())
+
+app.post('/api/persons', (req, res) => {
+  if (!req.body.name || !req.body.number) {
+    return res.status(400).json({ error: "Content missing"})
+  }
+
+  if (data.find( p => p.name === req.body.name)){
+    return res.status(400).json({ error: "Name has been taken"})
+  }
+  const person = {
+    name: req.body.name,
+    number : req.body.number,
+    id: String(Math.floor(Math.random() * 1000000000))
+  }
+  data = [...data, person]
+  res.status(201).json(person)
+})
+
 app.get('/api/persons', (req, res) => {
     res.json(data)
 })
