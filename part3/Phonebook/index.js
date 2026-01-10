@@ -1,5 +1,6 @@
 const express = require('express')
 const app = express()
+const morgan = require('morgan')
 
 let data = 
 [
@@ -26,6 +27,7 @@ let data =
 ]
 
 app.use(express.json())
+app.use(morgan("tiny"))
 
 app.post('/api/persons', (req, res) => {
   if (!req.body.name || !req.body.number) {
