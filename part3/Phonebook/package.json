@@ -9,12 +9,17 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js",
-    "dev": "nodemon index.js"
+    "dev": "nodemon index.js",
+    "build:ui": "shx rm -rf dist && cd ../../part2/Phonebook && npm run build && shx cp -r dist ../../part3/Phonebook",
+    "deploy:full": "npm run build:ui && git add . && git commit -m uibuild && git push"
   },
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^5.2.1",
     "morgan": "^1.10.1",
     "nodemon": "^3.1.11"
+  },
+  "devDependencies": {
+    "shx": "^0.4.0"
   }
 }
