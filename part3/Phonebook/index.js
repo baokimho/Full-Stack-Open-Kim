@@ -3,6 +3,7 @@ const app = express()
 const morgan = require('morgan')
 const cors = require('cors')
 const path = require('path')
+const fs = require('fs')
 
 let data = 
 [
@@ -35,6 +36,22 @@ morgan.token('body', (req) => {
 app.use(cors())
 app.use(express.json())
 app.use(express.static(path.join(__dirname, 'dist')))
+app.get('/debug', (req, res) => {
+  const directoryPath = path.join(__dirname, 'dist')
+  let files = []
+  try {
+    // Thử đọc xem trong folder dist có cái gì
+    files = fs.readdirSync(directoryPath)
+  } catch (e) {
+    files = ['Lỗi rồi: ' + e.message]
+  }
+  
+  res.json({
+    "1. Server đang đứng tại": __dirname,
+    "2. Server đang tìm folder dist tại": directoryPath,
+    "3. Các file tìm thấy trong dist": files
+  })
+})
 // app.use(morgan("tiny"))
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms :body'))
 
