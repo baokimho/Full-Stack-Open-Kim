@@ -17,7 +17,9 @@ const App = () => {
   useEffect(() =>{
     personService.getAll().then(initialPersons => {
       setPersons(initialPersons)
+      console.log('data get:', initialPersons)
     })
+    
   },[])
 
   const showNotification = (text) => {
@@ -76,6 +78,7 @@ const App = () => {
 
   const handleDelete = (id) => {
     const person = persons.find(p => p.id === id)
+    console.log(person.id)
     if (window.confirm(`Delete ${person.name} ?`)) {
       personService.delete(id).then(() => {
         setPersons(persons.filter(p => p.id !== id))
