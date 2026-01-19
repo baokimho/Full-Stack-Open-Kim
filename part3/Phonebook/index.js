@@ -6,26 +6,26 @@ const cors = require('cors')
 const path = require('path')
 const Person = require('./mongo.js')
 
-// let data = 
+// let data =
 // [
-//     { 
+//     {
 //       "id": "1",
-//       "name": "Arto Hellas", 
+//       "name": "Arto Hellas",
 //       "number": "040-123456"
 //     },
-//     { 
+//     {
 //       "id": "2",
-//       "name": "Ada Lovelace", 
+//       "name": "Ada Lovelace",
 //       "number": "39-44-5323523"
 //     },
-//     { 
+//     {
 //       "id": "3",
-//       "name": "Dan Abramov", 
+//       "name": "Dan Abramov",
 //       "number": "12-43-234345"
 //     },
-//     { 
+//     {
 //       "id": "4",
-//       "name": "Mary Poppendieck", 
+//       "name": "Mary Poppendieck",
 //       "number": "39-23-6423122"
 //     }
 // ]
@@ -44,60 +44,60 @@ app.use(morgan(':method :url :status :res[content-length] - :response-time ms :b
 app.post('/api/persons', (req, res, next) => {
 
   if (!req.body.name || !req.body.number) {
-    return res.status(400).json({ error: "Content missing"})
+    return res.status(400).json({ error: 'Content missing' })
   }
 
   const person = new Person({
     name: req.body.name,
     number: req.body.number
   })
-  
-  person.save().then(savedP =>{
+
+  person.save().then(savedP => {
     res.status(201).json(savedP)
   })
-  .catch((e)=> next(e))
+    .catch((e) => next(e))
 })
 
 app.get('/api/persons', (req, res, next) => {
-    Person.find({}).then( p => {
-      res.status(200).json(p)
-    })
-    .catch((e)=> next(e))
+  Person.find({}).then( p => {
+    res.status(200).json(p)
+  })
+    .catch((e) => next(e))
 })
 
 app.get('/info', (req, res, next) => {
-    Person.find({}).then( p => {
-      res.send(`Phonebook has info for ${p.length} people <br>${Date()}`)
-    })
-    .catch((e)=> next(e))
+  Person.find({}).then( p => {
+    res.send(`Phonebook has info for ${p.length} people <br>${Date()}`)
+  })
+    .catch((e) => next(e))
 })
 
 app.get('/api/persons/:id', (req, res, next) => {
-    Person.findById(req.params.id).then(p => {
-      if (!p){
-        return res.status(404).end()
-      }
-      res.status(200).json(p)
-    }) 
-    .catch((e)=> next(e))
+  Person.findById(req.params.id).then(p => {
+    if (!p){
+      return res.status(404).end()
+    }
+    res.status(200).json(p)
+  })
+    .catch((e) => next(e))
 })
 
 app.delete('/api/persons/:id', (req, res, next) => {
   Person.findByIdAndDelete(req.params.id)
-    .then(result => {
+    .then(() => {
       res.status(204).end()
     })
-    .catch((e)=> next(e))
+    .catch((e) => next(e))
 })
 
 app.put('/api/persons/:id', (req, res, next) => {
   const { name, number } = req.body
-  Person.findByIdAndUpdate(req.params.id, 
-      { name, number},
-      { new: true, runValidators: true, context: 'query' })
+  Person.findByIdAndUpdate(req.params.id,
+    { name, number },
+    { new: true, runValidators: true, context: 'query' })
     .then(result => {
       if (result) {
-      res.json(result)
+        res.json(result)
       } else {
         res.status(404).end()
       }

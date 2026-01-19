@@ -1,10 +1,10 @@
 const mongoose = require('mongoose')
-const url = process.env.DB_URI 
+const url = process.env.DB_URI
 
 mongoose.set('strictQuery',false)
 
 mongoose.connect(url, { family: 4 })
-  .then(result => console.log('connected'))
+  .then(() => console.log('connected'))
   .catch((e) => console.log(e.message))
 
 const personSchema = new mongoose.Schema({
