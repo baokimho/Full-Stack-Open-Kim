@@ -8,7 +8,7 @@ const personService = {
     },
 
     create: (newPerson) => {
-        return axios.post(baseUrl, newPerson).then(response => response.data);
+        return axios.post(baseUrl, newPerson).then(response => response.data)
     },
 
     delete: (id) => {

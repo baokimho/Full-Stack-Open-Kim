@@ -74,6 +74,10 @@ const App = () => {
       setNewNumber('')
       showNotification(`Added ${personObject.name}`)
     })
+    .catch((error) => {
+      console.log(error )
+      showError(error.response.data.error)
+    })
   }
 
   const handleDelete = (id) => {
