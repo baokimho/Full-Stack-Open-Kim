@@ -52,6 +52,22 @@ test('a valid blog can be added', async () => {
   assert(titles.includes('Canonical string reduction'))
 })
 
+test('if likes property is missing, it defaults to 0', async () => {
+  const newBlog = {
+    title: 'TDD is awesome',
+    author: 'Robert C. Martin',
+    url: 'http://cleancoder.com'
+  }
+
+  const response = await api
+    .post('/api/blogs')
+    .send(newBlog)
+    .expect(201)
+    .expect('Content-Type', /application\/json/)
+
+  assert.strictEqual(response.body.likes, 0)
+})
+
 after(async () => {
   await mongoose.connection.close()
 })
