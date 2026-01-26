@@ -4,6 +4,7 @@ const blogsRouter = require('./controllers/BlogController')
 const mongoose = require('mongoose')
 const config = require('./utils/config')
 const logger = require('./utils/logger')
+const middlewares = require('./utils/middlewares')
 
 const mongoUrl = config.MONGODB_URI
 
@@ -18,6 +19,7 @@ mongoose.connect(mongoUrl, { family: 4 })
 app.use(express.json())
 
 app.use('/api/blogs', blogsRouter)
+app.use(middlewares.errorHandler)
 
 const PORT = config.PORT
 
