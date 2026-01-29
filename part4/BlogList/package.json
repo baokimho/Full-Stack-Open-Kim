@@ -7,14 +7,14 @@
     "start": "cross-env NODE_ENV=production node index.js",
     "dev": "cross-env NODE_ENV=development node --watch index.js",
     "test": "cross-env NODE_ENV=test node --test",
-    "test_blog_api" : "cross-env NODE_ENV=test node -- tests/blog_api.test.js"
-    
+    "test_blog_api": "cross-env NODE_ENV=test node -- tests/blog_api.test.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
+    "bcrypt": "^6.0.0",
     "dotenv": "^17.2.3",
     "express": "^5.2.1",
     "lodash": "^4.17.21",

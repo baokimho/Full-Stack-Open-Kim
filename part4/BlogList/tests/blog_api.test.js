@@ -110,6 +110,31 @@ test('a specific blog can be deleted', async () => {
   assert(!ids.includes(blogToDelete.id))
 })
 
+test('a blog can be updated', async () => {
+  const blogsAtStart = await helper.blogsInDb()
+  const blogToUpdate = blogsAtStart[0]
+
+  const blogData = {
+    likes: blogToUpdate.likes + 1,
+    title: blogToUpdate.title,
+    author: blogToUpdate.author,
+    url: blogToUpdate.url
+  }
+
+  const response = await api
+    .put(`/api/blogs/${blogToUpdate.id}`)
+    .send(blogData)
+    .expect(200) 
+    .expect('Content-Type', /application\/json/)
+
+  assert.strictEqual(response.body.likes, blogToUpdate.likes + 1)
+
+  const blogsAtEnd = await helper.blogsInDb()
+  const updatedBlog = blogsAtEnd.find(b => b.id === blogToUpdate.id)
+  
+  assert.strictEqual(updatedBlog.likes, blogToUpdate.likes + 1)
+})
+
 after(async () => {
   await mongoose.connection.close()
 })
